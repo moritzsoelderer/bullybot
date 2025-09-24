@@ -2,3 +2,9 @@
 .venv
 
 *.pyc
+
+**/.terraform
+*.hcl
+*.pem
+*.tfstate
+*.tfstate.backup

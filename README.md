@@ -1,0 +1,23 @@
+## How to Setup
+
+# Locally
+To bring bullybot "online", you can simply run the `bullybot.py` file with python.
+Keep in mind that you need to create a `.env` file that holds your discord bot token. For an example see `sample.env`.
+
+# Cloud
+To deploy the bot to a cloud instance, you can find a terraform IaC config file under `infrastructure`.
+The config is currently setup for AWS, yet easily set up for other cloud providers as well.
+for the config to take effect, one must first install the `aws cli`, and configure it with an access key one can get from aws console's IAM.
+In order to allow terraform to execute the code defined in `./infrastructure/main.tf`, terraform needs sufficient permissions from aws. Either the root user is used for terraform, which is not recommended, or a new IAM user, policy and role must be created. An example policy that includes the basic permissions for terraform to execute the script correctly can be found in `./infrastructure/terraform_policy.json`
+
+Also, terraform needs an ssh key pair to tunnel into the instance. This can be created on AWS Console or with the cli tool. If the name of the pair differs from `terraform-key-pair`, one needs to update the name in `./infrastructure/main.tf`.
+
+To deploy the bot, one must install terraform (add it to PATH) and execute the following commands in `./infrastructure`:
+
+- `terraform init`
+- `terraform plan`
+- `terraform apply`
+
+Now, an EC2 instance should have been created.
+
+*DISCLAIMER:* This setup is configured for eu-north-1 region. Available linux images and instance types may differ depending on your region.
