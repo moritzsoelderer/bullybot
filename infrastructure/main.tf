@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-north-1"
+  region = var.aws_region
 }
 
 data "aws_ami" "ubuntu" {
@@ -48,32 +48,15 @@ resource "aws_security_group" "ssh_access" {
 # EC2 instance
 resource "aws_instance" "web_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
-  key_name      = "terraform-key-pair"           # Replace with your key pair name
+  instance_type = var.instance_type
+  key_name      = var.key_pair_name
   iam_instance_profile   = aws_iam_instance_profile.terraform_profile.name
 
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
 
-  user_data = <<-EOF
-                #!/bin/bash
-                # install git & python & pip
-                sudo apt update
-                sudo apt install git python3 python3-pip -y
-                sudo apt install awscli -y
-
-                # get discord bot token from environment
-                DISCORD_BOT_TOKEN=$(aws ssm get-parameter --name "DISCORD_BOT_TOKEN" --region eu-north-1 --with-decryption --query "Parameter.Value" --output text)
-                export DISCORD_BOT_TOKEN
-                
-                # checkout repo
-                git clone https://github.com/moritzsoelderer/bullybot.git /home/ubuntu/bullybot
-
-                # install requirements
-                pip3 install -r /home/ubuntu/bullybot/requirements.txt
-                
-                # run python script
-                python3 /home/ubuntu/bullybot/bullybot.py
-                EOF
+  user_data =   templatefile("${path.module}/init_script.bash", {
+    aws_region = var.aws_region
+  })
 
   tags = {
     Name = "BullyBot-EC2-Instance"

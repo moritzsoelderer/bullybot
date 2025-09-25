@@ -38,16 +38,7 @@
         {
             "Effect": "Allow",
             "Action": "ssm:GetParameter",
-            "Resource": "arn:aws:ssm:eu-north-1:605618814107:parameter/DISCORD_BOT_TOKEN"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameter",
-                "ec2:DescribeVolumes",
-                "ec2:DescribeInstanceCreditSpecifications"
-            ],
-            "Resource": "arn:aws:ssm:*:*:parameter/aws/service/ami-amazon-linux-latest/*"
+            "Resource": "arn:aws:ssm:${aws_region}:605618814107:parameter/DISCORD_BOT_TOKEN"
         }
     ]
 }
