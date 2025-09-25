@@ -1,6 +1,6 @@
 ## BullyBot
 
-This repository contains the source code for a simple discord bot, which allows one to bully your friends with predefined insults.
+This repository contains the source code for a simple discord bot, which allows one to bully their friends with predefined insults.
 The bot is not intended to harass strangers, and people in general. Therefore, it is best to keep bullybot on your private server with your friends.
 
 Furthermore, this repo allows for a simple **deployment of bullybot on AWS**, such that bullybot is **always online**, even if your machine is turned off! 
