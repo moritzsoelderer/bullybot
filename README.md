@@ -20,7 +20,7 @@ The config is currently set up for AWS, yet easily set up for other cloud provid
 for the config to take effect, one must first install the `aws cli`, and configure it with an access key one can get from aws console's IAM.
 In order to allow terraform to execute the code defined in `./infrastructure/main.tf`, terraform needs sufficient permissions from aws. Either the root user is used for terraform, which is not recommended, or a new IAM user, policy and role must be created. An example policy that includes the basic permissions for terraform to execute the script correctly can be found in `./infrastructure/terraform_policy.json`. Naturally, as the terraform user needs some permissions to be able to create roles, policies and users itself, you cannot directly define these resources in terraform in this case.
 
-Also, terraform needs an ssh key pair to tunnel into the instance. This can be created on AWS Console or with the cli tool. If the name of the pair differs from `terraform-key-pair`, one needs to update the name in `./infrastructure/main.tf`.
+Also, terraform needs an ssh key pair to tunnel into the instance. This can be created on AWS Console or with the cli tool. If the name of the pair differs from `terraform-key-pair`, one needs to update the name in `./infrastructure/terraform.tfvars`.
 
 To deploy the bot, one must install terraform (add it to PATH) and execute the following commands in `./infrastructure`:
 
